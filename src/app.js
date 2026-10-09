@@ -1,6 +1,7 @@
 import express from 'express'
+import {PORT} from './config.js'
 
 const app=express()
 
-app.listen(3000)
-console.log('Corriendo en la terminal 3000')
+app.listen(PORT)
+console.log('Corriendo en la terminal', PORT)
