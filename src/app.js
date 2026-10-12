@@ -10,7 +10,10 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
+
 app.use('/api', router);
+
+
 
 app.listen(PORT)
 console.log('Corriendo en la terminal', PORT)
