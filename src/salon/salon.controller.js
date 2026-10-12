@@ -145,7 +145,9 @@ export const createDatosSalon = async (req, res, next) => {
             }
         });
     } catch (error) {
-        next(error);
+       
+       console.log(error) 
+       next(error);
     } finally {
         connection.release();
     }

@@ -1,4 +1,4 @@
-export const PORT=process.env.PORT
+export const PORT=process.env.PORT || 8080
 
 export const DB_HOST=process.env.DB_HOST
 export const DB_USER=process.env.DB_USER
