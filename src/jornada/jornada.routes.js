@@ -6,12 +6,18 @@ const router = Router();
 // Ruta para CREAR un salon
 router.post('/', jornada.createJornada);
 
-// Ruta para OBTENER todos los salones
-router.get('/', jornada.getJornadaBySalon);
-
+// Rutas de catálogos (ANTES de /:id)
 router.get('/tipos-duracion', jornada.getTiposDuracionBloque);
 
 router.get('/tipos-bloque', jornada.getTiposBloque);
+
+router.get('/dias-semana', jornada.getDiasSemana);
+
+// LISTAR TODAS LAS JORNADAS (admite ?datos_salon_id=)
+router.get('/', jornada.getJornadas);
+
+// OBTENER LA JORNADA DE UN SALÓN
+router.get('/salon/:salonId', jornada.getJornadaBySalon);
 
 // Ruta para OBTENER un SALON por ID
 router.get('/:id', jornada.getJornadaById);

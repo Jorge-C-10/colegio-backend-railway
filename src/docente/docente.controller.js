@@ -196,11 +196,9 @@ export const getDocentes = async (req, res, next) => {
                 d.id,
                 d.nombres_completos,
                 d.especialidad,
-                d.estado,
                 COALESCE(SUM(dd.horas), 0) AS total_horas_disponibles
              FROM docente d
              LEFT JOIN disponibilidad_docente dd ON d.id = dd.docente_id
-             WHERE d.estado = 'activo'
              GROUP BY d.id
              ORDER BY d.nombres_completos`
         );
@@ -230,7 +228,6 @@ export const getDocenteById = async (req, res, next) => {
                 d.id,
                 d.nombres_completos,
                 d.especialidad,
-                d.estado,
                 COALESCE(SUM(dd.horas), 0) AS total_horas_disponibles
              FROM docente d
              LEFT JOIN disponibilidad_docente dd ON d.id = dd.docente_id
@@ -488,8 +485,21 @@ export const deleteDocente = async (req, res, next) => {
             });
         }
 
+        // La tabla docente no tiene columna estado, así que la baja es física.
+        // Primero se liberan los registros que apuntan al docente para no
+        // violar las claves foráneas (disponibilidad_docente, curso_docente_salon,
+        // horario_generado).
         await connection.query(
-            "UPDATE docente SET estado = 'inactivo' WHERE id = ?",
+            'DELETE FROM horario_generado WHERE docente_id = ?',
+            [id]
+        );
+        await connection.query(
+            'DELETE FROM curso_docente_salon WHERE docente_id = ?',
+            [id]
+        );
+
+        await connection.query(
+            'DELETE FROM docente WHERE id = ?',
             [id]
         );
 

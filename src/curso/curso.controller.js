@@ -156,7 +156,14 @@ export const getCursosBySalon = async (req, res, next) => {
 
         const [cursos] = await connection.query(
             `SELECT 
+                cds.id,
+                cds.curso_id,
+                cds.docente_id,
+                cds.horas_semanales,
+                cds.color,
+                cds.estado,
                 c.nombre AS curso,
+                c.color AS curso_color,
                 d.nombres_completos AS docente
              FROM curso_docente_salon cds
              INNER JOIN curso c ON cds.curso_id = c.id

@@ -734,6 +734,29 @@ export const getTiposBloque = async (req, res, next) => {
     }
 };
 
+// LISTAR DÍAS DE LA SEMANA
+
+export const getDiasSemana = async (req, res, next) => {
+    const connection = await pool.getConnection();
+    try {
+        const [dias] = await connection.query(
+            `SELECT id, nombre, abrev, orden
+             FROM dias_semana
+             ORDER BY orden`
+        );
+
+        res.status(200).json({
+            status: 'success',
+            count: dias.length,
+            data: dias
+        });
+    } catch (error) {
+        next(error);
+    } finally {
+        connection.release();
+    }
+};
+
 // LISTAR TIPOS DE DURACIÓN DE BLOQUE
 
 export const getTiposDuracionBloque = async (req, res, next) => {

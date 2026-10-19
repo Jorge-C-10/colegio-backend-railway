@@ -258,6 +258,8 @@ export const getHorario = async (req, res, next) => {
         const [horario] = await connection.query(
             `SELECT 
                 hg.id,
+                hg.curso_id,
+                hg.docente_id,
                 hg.bloque_inicio,
                 hg.bloque_fin,
                 hg.hora_inicio,
