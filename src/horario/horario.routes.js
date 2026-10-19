@@ -1,5 +1,14 @@
-import {Router} from 'express'
+import { Router } from 'express';
+import {
+    generarHorario,
+    getHorario,
+    deleteHorario
+} from './horario.controller.js';
 
-const router=Router()
+const router = Router();
 
-export default router
+router.post('/generar', generarHorario);
+router.get('/:configuracion_jornada_id', getHorario);
+router.delete('/:configuracion_jornada_id', deleteHorario);
+
+export default router;
